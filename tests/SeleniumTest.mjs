@@ -13,7 +13,7 @@ const seleniumUrl = environment === 'github'
 // Note: Start the nodejs server before running the test locally
 const serverUrl = environment === 'github' 
   ? 'http://testserver:3000' 
-  : 'http://localhost:3000';
+  : 'http://host.docker.internal:3000';
 
 console.log(`Running tests in '${environment}' environment`);
 console.log(`Selenium URL: ${seleniumUrl}`);
@@ -24,12 +24,7 @@ console.log(`Server URL: ${serverUrl}`);
     console.log("before driver init")
 
     // Initialize the WebDriver with Chrome
-    const driver = environment === 'github' 
-        ? await new Builder()
-        .forBrowser('chrome')
-        .usingServer(seleniumUrl) // Specify the Selenium server
-        .build()
-        : await new Builder()
+    const driver = await new Builder()
         .forBrowser('chrome')
         .usingServer(seleniumUrl) // Specify the Selenium server
         .build();
